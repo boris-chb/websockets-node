@@ -6,8 +6,40 @@
       body {
         margin: 0;
         padding-bottom: 3rem;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
           Helvetica, Arial, sans-serif;
+      }
+
+      /* New panel styles */
+      #button-panel {
+        background: rgba(0, 0, 0, 0.15);
+        padding: 0.25rem;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 3rem;
+        display: flex;
+        height: 3rem;
+        box-sizing: border-box;
+        backdrop-filter: blur(10px);
+        justify-content: flex-end; /* To align buttons to the right */
+        align-items: center; /* To vertically center buttons */
+      }
+
+      /* Button styles */
+      #button-panel button {
+        background: #333;
+        border: none;
+        padding: 0 1rem;
+        margin: 0.25rem;
+        border-radius: 8px;
+        outline: none;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      #button-panel button:focus {
+        outline: none;
       }
 
       #form {
@@ -40,6 +72,7 @@
         border-radius: 8px;
         outline: none;
         color: #fff;
+        cursor: pointer;
       }
 
       #messages {
@@ -57,6 +90,10 @@
   </head>
 
   <body>
+    <div id="button-panel">
+      <button id="submit-button">Submit</button>
+      <button id="save-button">Save</button>
+    </div>
     <ul id="messages"></ul>
     <form id="form" action="">
       <input id="input" autocomplete="off" /><button>Send</button>
@@ -69,15 +106,36 @@
       var messages = document.getElementById("messages");
       var form = document.getElementById("form");
       var input = document.getElementById("input");
+      var submitBtn = document.getElementById("submit-button");
+      var saveBtn = document.getElementById("save-button");
 
+
+      saveBtn.addEventListener('click', () => {
+        socket.emit('save')
+        var item = document.createElement("li");
+        item.textContent = 'Save...'
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+      })
+
+      submitBtn.addEventListener('click', () => {
+        socket.emit('submit')
+        var item = document.createElement("li");
+        item.textContent = 'Submit'
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+      })
+      
       form.addEventListener("submit", e => {
         e.preventDefault();
         if (input.value) {
           const msgObj = {
             type: "ADD_REVIEW",
             payload: {
-              policyId: "3039",
-              note: input.value,
+              policyId: input.value,
+              contentType: 'song',
+              language: 'russian',
+              note: '',
               timer: null,
             },
           };
