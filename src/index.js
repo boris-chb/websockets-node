@@ -27,6 +27,10 @@ io.on("connection", (socket) => {
     io.emit("submit", msg);
   });
 
+  socket.on("strike", (msg) => {
+    io.emit("strike", msg);
+  });
+
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
