@@ -18,10 +18,10 @@ jobs:
           curl -L https://fly.io/install.sh | sh
 
       - name: Log in to Fly.io
-        run: flyctl login --token ${{ secrets.FLY_API_TOKEN }}
+        run: /usr/local/bin/flyctl login --token ${{ secrets.FLY_API_TOKEN }}
         
       - name: Deploy to Fly.io
-        run: flyctl deploy
+        run: /usr/local/bin/flyctl deploy
 
       env:
         FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
