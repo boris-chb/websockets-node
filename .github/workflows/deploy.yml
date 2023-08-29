@@ -13,7 +13,7 @@ jobs:
         run: |
           curl -L https://fly.io/install.sh | sh
       - name: Log in to Fly.io
-        run: '/home/runner/.fly/bin/flyctl login --token ${{ secrets.FLY_API_TOKEN }}'
+        run: '/home/runner/.fly/bin/flyctl auth login -t ${{ secrets.FLY_API_TOKEN }}'
       - name: Deploy to Fly.io
         run: /home/runner/.fly/bin/flyctl deploy
     env:
