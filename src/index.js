@@ -12,26 +12,26 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
-io.on("connection", socket => {
+io.on("connection", (socket) => {
   console.log("user connected");
 
-  socket.on("chat message", msg => {
+  socket.on("chat message", (msg) => {
     io.emit("chat message", msg);
   });
 
-  socket.on("new video", metadata => {
+  socket.on("new video", (metadata) => {
     io.emit("new video", metadata);
   });
 
-  socket.on("save", msg => {
+  socket.on("save", (msg) => {
     io.emit("save", msg);
   });
 
-  socket.on("submit", msg => {
+  socket.on("submit", (msg) => {
     io.emit("submit", msg);
   });
 
-  socket.on("strike", ({ msg }) => {
+  socket.on("strike", (msg) => {
     io.emit("strike", msg);
   });
 
